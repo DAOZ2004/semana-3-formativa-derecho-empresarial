@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Calculadora de salario líquido y alertas jurídicas laborales.">
+  <title>Balance Laboral | Salario y cumplimiento</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="index.html" aria-label="Balance Laboral, inicio">
+        <span class="brand-mark">BL</span>
+        <span>Balance <strong>Laboral</strong></span>
+      </a>
+      <div class="topbar-meta">
+        <span class="status-dot"></span>
+        <span>Motor de revisión activo</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="intro-section">
+        <div class="eyebrow"><span></span> Herramienta de control interno</div>
+        <h1>Calcula con claridad.<br><em>Decide con respaldo.</em></h1>
+        <p class="intro-copy">Registra los datos del trabajador, proyecta su salario líquido y detecta situaciones que requieren revisión jurídica antes de procesar la nómina.</p>
+      </section>
+
+      <section class="workspace-grid">
+        <div class="form-panel panel">
+          <div class="panel-heading">
+            <div>
+              <span class="section-kicker">01 / Registro</span>
+              <h2>Datos del trabajador</h2>
+            </div>
+            <span class="required-note">* Campos obligatorios</span>
+          </div>
+
+          <form id="salary-form">
+            <div class="field-group full-width">
+              <label for="worker-name">Nombre completo <span>*</span></label>
+              <input type="text" id="worker-name" placeholder="Ej. Ana Martínez" required>
+            </div>
+
+            <div class="field-row">
+              <div class="field-group">
+                <label for="worker-role">Cargo <span>*</span></label>
+                <input type="text" id="worker-role" placeholder="Ej. Analista contable" required>
+              </div>
+              <div class="field-group">
+                <label for="worker-type">Tipo de trabajador <span>*</span></label>
+                <select id="worker-type" required>
+                  <option value="dependiente">Dependiente</option>
+                  <option value="domestico">Trabajo doméstico</option>
+                  <option value="aprendiz">Aprendiz / pasantía</option>
+                  <option value="pensionado">Pensionado activo</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field-group salary-field">
+              <label for="gross-salary">Salario bruto mensual <span>*</span></label>
+              <div class="input-with-prefix"><span>$</span><input type="number" id="gross-salary" min="0" step="0.01" placeholder="0.00" required></div>
+              <small>Moneda de referencia: dólar estadounidense (USD)</small>
+            </div>
+
+            <div class="divider"></div>
+            <div class="panel-heading compact-heading">
+              <div>
+                <span class="section-kicker">02 / Deducciones</span>
+                <h2>Descuentos aplicables</h2>
+              </div>
+              <span class="optional-badge">Opcionales</span>
+            </div>
+
+            <div class="deduction-list">
+              <label class="deduction-item">
+                <span class="checkbox-wrap"><input type="checkbox" id="include-isss" checked><span class="custom-checkbox"></span></span>
+                <span class="deduction-copy"><strong>ISSS</strong><small>Cotización de salud</small></span>
+                <span class="deduction-rate">3.00%</span>
+              </label>
+              <label class="deduction-item">
+                <span class="checkbox-wrap"><input type="checkbox" id="include-afp" checked><span class="custom-checkbox"></span></span>
+                <span class="deduction-copy"><strong>AFP</strong><small>Cotización previsional</small></span>
+                <span class="deduction-rate">7.25%</span>
+              </label>
+              <label class="deduction-item">
+                <span class="checkbox-wrap"><input type="checkbox" id="include-alimony"><span class="custom-checkbox"></span></span>
+                <span class="deduction-copy"><strong>Pensión alimenticia</strong><small>Requiere orden o autorización</small></span>
+                <span class="deduction-rate">Fija</span>
+              </label>
+              <label class="deduction-item">
+                <span class="checkbox-wrap"><input type="checkbox" id="include-debt"><span class="custom-checkbox"></span></span>
+                <span class="deduction-copy"><strong>Otros descuentos / deudas</strong><small>Embargo o descuento autorizado</small></span>
+                <span class="deduction-rate">Fija</span>
+              </label>
+            </div>
+
+            <div class="conditional-fields" id="conditional-fields" hidden>
+              <div class="field-row">
+                <div class="field-group" id="alimony-amount-wrap" hidden>
+                  <label for="alimony-amount">Monto pensión alimenticia</label>
+                  <div class="input-with-prefix"><span>$</span><input type="number" id="alimony-amount" min="0" step="0.01" value="0"></div>
+                </div>
+                <div class="field-group" id="debt-amount-wrap" hidden>
+                  <label for="debt-amount">Monto de deuda / embargo</label>
+                  <div class="input-with-prefix"><span>$</span><input type="number" id="debt-amount" min="0" step="0.01" value="0"></div>
+                </div>
+              </div>
+              <div class="field-row" id="authorization-row" hidden>
+                <label class="toggle-field"><input type="checkbox" id="has-authorization"><span class="toggle"></span><span>Existe autorización u orden legal documentada</span></label>
+                <label class="toggle-field"><input type="checkbox" id="isss-remitted"><span class="toggle"></span><span>Las cotizaciones registradas fueron enteradas</span></label>
+              </div>
+            </div>
+
+            <button class="primary-button" type="submit"><span>Generar revisión</span><span class="button-arrow">→</span></button>
+          </form>
+        </div>
+
+        <div class="results-column">
+          <div class="summary-panel panel">
+            <div class="panel-heading">
+              <div>
+                <span class="section-kicker">03 / Resultado</span>
+                <h2>Resumen salarial</h2>
+              </div>
+              <span class="currency-tag">USD / MES</span>
+            </div>
+            <div class="empty-result" id="empty-result">
+              <div class="empty-icon">↗</div>
+              <p>Completa los datos para ver<br>el resumen del trabajador.</p>
+            </div>
+            <div class="salary-result" id="salary-result" hidden>
+              <div class="worker-summary"><span class="avatar" id="worker-avatar">AM</span><div><strong id="result-name">Ana Martínez</strong><span id="result-role">Analista contable</span></div></div>
+              <div class="gross-line"><span>Salario bruto</span><strong id="result-gross">$0.00</strong></div>
+              <div class="deductions-breakdown" id="deductions-breakdown"></div>
+              <div class="net-salary"><span>Salario líquido</span><strong id="result-net">$0.00</strong></div>
+            </div>
+          </div>
+
+          <div class="alerts-panel panel">
+            <div class="panel-heading">
+              <div>
+                <span class="section-kicker">04 / Cumplimiento</span>
+                <h2>Alertas jurídicas</h2>
+              </div>
+              <span class="alert-count" id="alert-count">0 activas</span>
+            </div>
+            <div class="alerts-list" id="alerts-list">
+              <div class="alert-empty"><span class="shield-icon">✓</span><p>Las alertas aparecerán aquí<br>al generar la revisión.</p></div>
+            </div>
+            <p class="legal-note">Las alertas son orientativas y deben ser verificadas con la documentación y la normativa aplicable al caso.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer><span>Balance Laboral</span><span>Control de nómina · Revisión preventiva</span><span id="current-year"></span></footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
