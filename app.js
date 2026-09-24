@@ -13,7 +13,7 @@ const money = new Intl.NumberFormat('en-US', {
   currency: 'USD'
 });
 
-const MINIMUM_WAGE = 365;
+const MINIMUM_WAGE = 408;
 const MINIMUM_NET_SALARY = 100;
 
 const RATES = {
